@@ -13,7 +13,7 @@ sd.seedir(image_path, style='spaces', indent=4, anystart='- ')
 data = DataLoader.from_folder(image_path)
 train_data, test_data = data.split(0.9)
 
-model = image_classifier.create(train_data)
+model = image_classifier.create(train_data, epochs=15, batch_size=50, shuffle=True)
 
 loss, accuracy = model.evaluate(test_data)
 

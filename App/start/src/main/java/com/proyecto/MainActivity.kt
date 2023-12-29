@@ -33,6 +33,8 @@ import com.proyecto.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.examples.classification.R
 import org.tensorflow.lite.examples.classification.ml.Dinosaurios3
+import org.tensorflow.lite.examples.classification.ml.Dinosaurs4
+import org.tensorflow.lite.examples.classification.ml.Model
 import org.tensorflow.lite.support.image.TensorImage
 import java.util.concurrent.Executors
 
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private val triceratops = R.drawable.triceratops
     private val trex = R.drawable.tyrannosaurus
+    private val unknown = R.drawable.unknown
 
     // Contains the recognition result. Since  it is a viewModel, it will survive screen rotations
     private val recogViewModel: RecognitionListViewModel by viewModels()
@@ -166,10 +169,16 @@ class MainActivity : AppCompatActivity() {
                         // updating the list of recognised objects
 
                         runOnUiThread {
-                            if(items[0].label == "Tiranosaurio"){
-                                imageView.setImageResource(trex)
-                            } else {
-                                imageView.setImageResource(triceratops)
+                            when (items[0].label) {
+                                "Tiranosaurio" -> {
+                                    imageView.setImageResource(trex)
+                                }
+                                "Desconocido" -> {
+                                    imageView.setImageResource(unknown)
+                                }
+                                else -> {
+                                    imageView.setImageResource(triceratops)
+                                }
                             }
                         }
                         recogViewModel.updateData(items)
@@ -203,7 +212,7 @@ class MainActivity : AppCompatActivity() {
     private class ImageAnalyzer(ctx: Context, private val listener: RecognitionListener) :
         ImageAnalysis.Analyzer {
 
-        private val model = Dinosaurios3.newInstance(ctx)
+        private val model = Dinosaurs4.newInstance(ctx)
 
         override fun analyze(imageProxy: ImageProxy) {
 
@@ -214,9 +223,23 @@ class MainActivity : AppCompatActivity() {
             val outputs = model.process(tfImage)
             val probability = outputs.probabilityAsCategoryList
 
+
+//            if(probability[0].score > probability[1].score){
+//                if(probability[0].score < 0.6f){
+//                    items.add(Recognition("Desconocido", 0f))
+//                }else{
+//                    items.add(Recognition(probability[0].label, probability[0].score))
+//                }
+//            } else {
+//                if(probability[1].score < 0.6f){
+//                    items.add(Recognition("Desconocido", 0f))
+//                }else{
+//                    items.add(Recognition(probability[1].label, probability[1].score))
+//                }
+//            }
+
             if(probability[0].score > probability[1].score){
                 items.add(Recognition(probability[0].label, probability[0].score))
-
             } else {
                 items.add(Recognition(probability[1].label, probability[1].score))
             }

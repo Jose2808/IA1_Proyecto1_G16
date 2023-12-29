@@ -7,11 +7,11 @@
 | 202010055 |      Derek Esquivel Díaz      |
 | 202004804 | José Andrés Montenegro Santos |
 
-## Objetivos de ña documentacion
+## Objetivos de la documentacion
 
 - Dar a entender la arquitectura que se utilizó para crear la aplicación, a manera de brindar una idea a las personas acerca de la forma en la que funciona y las tecnologías que se utilizaron.
 
-- Explicar de una forma clara la configuración de cada uno de las librarias  utilizadas en el proyecto, a manera de dar una idea de cual es el propósito de cada una.
+- Explicar de una forma clara la configuración de cada uno de las librarias utilizadas en el proyecto, a manera de dar una idea de cual es el propósito de cada una.
 
 ## Documentación
 
@@ -39,7 +39,7 @@ if (allPermissionsGranted()) {
 }
 ```
 
-Esta validación se realizará con la funcion ```checkSelfPermission``` incluida en el SDK para comprobar si los permisos ya fueron otorgados (como seria en el caso de que no es la primera vez que se ejecuta).
+Esta validación se realizará con la funcion `checkSelfPermission` incluida en el SDK para comprobar si los permisos ya fueron otorgados (como seria en el caso de que no es la primera vez que se ejecuta).
 
 ```kotlin
 private fun allPermissionsGranted(): Boolean = REQUIRED_PERMISSIONS.all {
@@ -106,11 +106,9 @@ Luego se iniciará el analizador de imagenes nativo de android, para esto se deb
             }
 ```
 
-
 Luego se selecciona la camara a utilizar, la aplicación usara la camara por defecto del dospositivo si esta disponible, si no utilizara la camara frontal.
 
 Por ultimo se enlazará la camara al ciclo de vida de la aplicación y se mostrara un preview de la camara en pantalla
-
 
 ```Kotlin
         val cameraSelector =
@@ -203,7 +201,7 @@ from pathlib import Path
 import imghdr
 
 data_dir = "./dinosaur_photo"
-image_extensions = [".png", ".jpg"] 
+image_extensions = [".png", ".jpg"]
 
 img_type_accepted_by_tf = ["bmp", "gif", "jpeg", "png"]
 
@@ -226,9 +224,9 @@ for filepath in Path(data_dir+"/Tiranosaurio").rglob("*"):
             Path.unlink(filepath)
         elif img_type not in img_type_accepted_by_tf:
             print(f"{filepath} is a {img_type}, not accepted by TensorFlow")
-            Path.unlink(filepath)       
+            Path.unlink(filepath)
     else:
-        Path.unlink(filepath)   
+        Path.unlink(filepath)
 ```
 
 #### Creación del modelo
@@ -269,10 +267,10 @@ from tflite_model_maker.image_classifier import DataLoader
 import tensorflow as tf
 assert tf.__version__.startswith('2')
 
-import seedir as sd 
+import seedir as sd
 ```
 
-Primeramente, se establece en una variable la ruta hacia la carpeta que contiene las imagenes y se hace uso de *seedir* para ver el contenido de la carpeta, sus subcarpetas y las imagenes.
+Primeramente, se establece en una variable la ruta hacia la carpeta que contiene las imagenes y se hace uso de _seedir_ para ver el contenido de la carpeta, sus subcarpetas y las imagenes.
 
 ```Python
 image_path = './dinosaur_photo'
@@ -292,8 +290,8 @@ Para crear el modelo se hace uso del método **create** de la clase image_classi
 
 ```Python
     model = image_classifier.create(
-        train_data=train_data, 
-        validation_data=test_data, 
+        train_data=train_data,
+        validation_data=test_data,
         epochs=30,
         batch_size=4
     )
